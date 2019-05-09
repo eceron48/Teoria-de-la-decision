@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dadovirtual.controlador.ControladorDado">
+   <children>
+      <Button fx:id="btnriesgo" layoutX="247.0" layoutY="408.0" mnemonicParsing="false" onAction="#riesgo" prefHeight="25.0" prefWidth="111.0" text="riesgo calculado" />
+      <TextField fx:id="valorRiesgotx" alignment="CENTER" layoutX="368.0" layoutY="408.0" promptText="riesgo" />
+      <Button fx:id="btnportodo" layoutX="247.0" layoutY="377.0" mnemonicParsing="false" onAction="#portodo" prefHeight="25.0" prefWidth="111.0" text="ir por todo" textOverrun="CLIP">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <ColorAdjust />
+               </bumpInput>
+               <light>
+                  <Light.Distant color="#b9b6b6" />
+               </light>
+            </Lighting>
+         </effect>
+      </Button>
+      <Button fx:id="btntirar" layoutX="34.0" layoutY="417.0" mnemonicParsing="false" onAction="#tirar" prefHeight="25.0" prefWidth="64.0" text="tirar" />
+      <Label id="lbmensaje" layoutX="302.0" layoutY="18.0" prefHeight="25.0" prefWidth="494.0" />
+      <TextField id="txtvalormax" fx:id="valorMaximotx" layoutX="13.0" layoutY="43.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="valorTiradatx" layoutX="13.0" layoutY="89.0" />
+      <Button fx:id="btninicio" layoutX="313.0" layoutY="575.0" mnemonicParsing="false" onAction="#empezar" prefHeight="25.0" prefWidth="74.0" text="inicio" />
+      <Label layoutX="13.0" layoutY="22.0" prefHeight="17.0" prefWidth="149.0" text="valor maximo de apuesta " />
+      <TextField fx:id="totaltx" disable="true" layoutX="375.0" layoutY="246.0" prefHeight="25.0" prefWidth="100.0" />
+      <Label layoutX="13.0" layoutY="70.0" prefHeight="17.0" prefWidth="149.0" text="valor tirada " />
+      <Label layoutX="52.0" layoutY="328.0" text="estadisticas del jugador " />
+      <Label layoutX="98.0" layoutY="362.0" prefHeight="17.0" prefWidth="64.0" text="ganancia" />
+      <Label layoutX="569.0" layoutY="79.0" prefHeight="17.0" prefWidth="141.0" text="ganancia" />
+      <Label layoutX="708.0" layoutY="10.0" prefHeight="17.0" prefWidth="149.0" text="estadisticas de la IA" />
+      <TextField fx:id="gananciatx" editable="false" layoutX="37.0" layoutY="383.0" prefHeight="25.0" prefWidth="168.0" />
+      <TextField editable="false" layoutX="13.0" layoutY="134.0" prefHeight="17.0" prefWidth="292.0" text="jugador 1" />
+      <TextField fx:id="gananciaIAtx" editable="false" layoutX="565.0" layoutY="102.0" />
+      <TextField editable="false" layoutX="565.0" layoutY="134.0" prefHeight="9.0" prefWidth="292.0" text="IA" />
+      <Button fx:id="btnparar" layoutX="111.0" layoutY="417.0" mnemonicParsing="false" onAction="#parar" prefHeight="25.0" prefWidth="64.0" text="parar" />
+      <Label layoutX="373.0" layoutY="225.0" text="total en la mesa " />
+      <Pane id="dado1" fx:id="panel1fx" layoutX="29.0" layoutY="170.0" prefHeight="158.0" prefWidth="221.0" />
+      <Pane id="dado2" fx:id="panel2fx" layoutX="598.0" layoutY="167.0" prefHeight="158.0" prefWidth="221.0" />
+   </children>
+   <effect>
+      <DropShadow />
+   </effect>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+</AnchorPane>
