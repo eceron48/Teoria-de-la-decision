@@ -43,7 +43,9 @@ public void setGanancia(double ganancia) {
 	this.ganancia = ganancia;
 }
 
-
+public void prueba() {
+	
+}
 
 @Override
 public void irPorTodo() {

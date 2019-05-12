@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import dadovirtual.modelo.Dado;
+import dadovirtual.modelo.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -50,13 +51,18 @@ public class ControladorDado  implements Initializable{
 
     @FXML
     private Pane panel1fx;
+    @FXML
+    private TextField txtnumJugador;
+    @FXML
+    private TextField txtnumIA;
 
     @FXML
     private Pane panel2fx;
     
     @FXML
     private Button btnrendirse;
-
+    @FXML
+    private TextField txttotalMesa;
     
 
     public Button getBtnriesgo() {
@@ -165,7 +171,9 @@ public class ControladorDado  implements Initializable{
 
 	@FXML
     void empezar(ActionEvent event) {
-		valorMaximotx.getText();
+		Jugador player=new Jugador();
+		player.getEfectivo();
+		player.getEfectivo()=Double.parseDouble(valorMaximotx.getText());
 		valorTiradatx.getText();
 		valorTiradatx.setEditable(false);
 		valorMaximotx.setEditable(false);
