@@ -172,8 +172,7 @@ public class ControladorDado  implements Initializable{
 	@FXML
     void empezar(ActionEvent event) {
 		Jugador player=new Jugador();
-		player.getEfectivo();
-		player.getEfectivo()=Double.parseDouble(valorMaximotx.getText());
+		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));;
 		valorTiradatx.getText();
 		valorTiradatx.setEditable(false);
 		valorMaximotx.setEditable(false);
