@@ -6,16 +6,29 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import dadovirtual.modelo.Dado;
+import dadovirtual.modelo.Imagenes;
 import dadovirtual.modelo.Jugador;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class ControladorDado  implements Initializable{
+	
+	@FXML
+    private Label lbimg1;
+    @FXML
+    private ImageView imbimg1;
+	@FXML
+    private ImageView imbimg2;
+	
+	@FXML
+    private  Label lbimg2;
     @FXML
     private Button btnriesgo;
 
@@ -173,6 +186,7 @@ public class ControladorDado  implements Initializable{
     void empezar(ActionEvent event) {
 		Jugador player=new Jugador();
 		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));;
+		player.setValorTirada(Double.parseDouble(valorTiradatx.getText()));
 		valorTiradatx.getText();
 		valorTiradatx.setEditable(false);
 		valorMaximotx.setEditable(false);
@@ -200,6 +214,15 @@ public class ControladorDado  implements Initializable{
     void tirar(ActionEvent event) {
     	Dado d=new Dado();
     	int dado=d.calcularNumero();
+    	Imagenes dado1=new Imagenes();
+    	
+    	imbimg1.setImage(dado1.gifJugador(dado));
+    	imbimg2.setImage(dado1.gifJugador(dado));
+    	
+  
+    	
+    	
+    	
 
     }
     @FXML
