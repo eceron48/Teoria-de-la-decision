@@ -17,9 +17,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="784.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dadovirtual.controlador.ControladorDado">
    <children>
-      <Button fx:id="btnriesgo" layoutX="286.0" layoutY="408.0" mnemonicParsing="false" onAction="#riesgo" prefHeight="25.0" prefWidth="111.0" text="riesgo calculado" />
-      <TextField fx:id="valorRiesgotx" alignment="CENTER" layoutX="412.0" layoutY="408.0" prefHeight="25.0" prefWidth="117.0" promptText="riesgo" />
-      <Button fx:id="btnportodo" layoutX="286.0" layoutY="379.0" mnemonicParsing="false" onAction="#portodo" prefHeight="25.0" prefWidth="111.0" text="ir por todo" textOverrun="CLIP">
+      <Button fx:id="btnriesgo" disable="true" layoutX="286.0" layoutY="408.0" mnemonicParsing="false" onAction="#riesgo" prefHeight="25.0" prefWidth="111.0" text="riesgo calculado" />
+      <TextField fx:id="valorRiesgotx" alignment="CENTER" editable="false" layoutX="412.0" layoutY="408.0" prefHeight="25.0" prefWidth="117.0" promptText="riesgo" />
+      <Button fx:id="btnportodo" disable="true" layoutX="286.0" layoutY="379.0" mnemonicParsing="false" onAction="#portodo" prefHeight="25.0" prefWidth="111.0" text="ir por todo" textOverrun="CLIP">
          <effect>
             <Lighting>
                <bumpInput>
@@ -31,7 +31,7 @@
             </Lighting>
          </effect>
       </Button>
-      <Button fx:id="btntirar" layoutX="73.0" layoutY="450.0" mnemonicParsing="false" onAction="#tirar" prefHeight="25.0" prefWidth="64.0" text="tirar" />
+      <Button fx:id="btntirar" disable="true" layoutX="73.0" layoutY="450.0" mnemonicParsing="false" onAction="#tirar" prefHeight="25.0" prefWidth="64.0" text="tirar" />
       <Label id="lbmensaje" layoutX="302.0" layoutY="18.0" prefHeight="25.0" prefWidth="494.0" />
       <TextField id="txtvalormax" fx:id="valorMaximotx" layoutX="46.0" layoutY="102.0" onKeyTyped="#soloNumerosMaximo" prefHeight="25.0" prefWidth="95.0" />
       <TextField fx:id="valorTiradatx" layoutX="46.0" layoutY="147.0" onKeyTyped="#soloNumerosTirar" prefHeight="25.0" prefWidth="95.0" />
@@ -46,7 +46,7 @@
       <TextField editable="false" layoutX="52.0" layoutY="11.0" prefHeight="25.0" prefWidth="58.0" text="jugador " />
       <TextField fx:id="gananciaIAtx" editable="false" layoutX="623.0" layoutY="67.0" />
       <TextField editable="false" layoutX="657.0" layoutY="11.0" prefHeight="25.0" prefWidth="48.0" text="IA" />
-      <Button fx:id="btnparar" layoutX="152.0" layoutY="450.0" mnemonicParsing="false" onAction="#parar" prefHeight="25.0" prefWidth="64.0" text="parar" />
+      <Button fx:id="btnparar" disable="true" layoutX="152.0" layoutY="450.0" mnemonicParsing="false" onAction="#parar" prefHeight="25.0" prefWidth="64.0" text="parar" />
       <Label layoutX="330.0" layoutY="225.0" text="total en la mesa " />
       <Pane id="dado1" fx:id="panel1fx" layoutX="29.0" layoutY="196.0" prefHeight="93.0" prefWidth="117.0">
          <children>

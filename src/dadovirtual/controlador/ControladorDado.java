@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import dadovirtual.modelo.Dado;
 import dadovirtual.modelo.GifIA;
+import dadovirtual.modelo.IA;
 import dadovirtual.modelo.Imagenes;
 import dadovirtual.modelo.Jugador;
 import dadovirtual.modelo.ResultadoIA;
@@ -26,6 +27,7 @@ import javafx.scene.control.Label;
 
 public class ControladorDado  implements Initializable{
 	Jugador player=new Jugador();
+	IA iaplayer=new IA();
 	
  	
 	@FXML
@@ -85,22 +87,41 @@ public class ControladorDado  implements Initializable{
     @FXML
     private TextField txttotalMesa;
     
-
-
+   
 	@FXML
     void empezar(ActionEvent event) {
 		
 	
 		if (valorMaximotx.getText().isEmpty() ||valorTiradatx.getText().isEmpty() ) {
+			
 			JOptionPane.showMessageDialog(null, "debe llenar los campos valor máximo de apuesta y valor tirada  ",null, 1);
 		}
 		else {
+			
 		
 		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));;
-		player.setValorTirada(Double.parseDouble(valorTiradatx.getText()));
-		player.setValorTirada(Double.valueOf(valorTiradatx.getText()));
-		valorTiradatx.setEditable(false);
-		valorMaximotx.setEditable(false);
+		player.setValorTirada(Double.parseDouble(valorTiradatx.getText()));	
+		iaplayer.setTirarIA(Double.parseDouble(valorTiradatx.getText()));
+		
+		if(player.getEfectivo()<player.getValorTirada()) {
+			JOptionPane.showMessageDialog(null, "el valor de la apuesta no debe exeder el valor maximo de la apuesta",null, 2);
+			player.iniciar();
+	    	iaplayer.iniciar();
+	    	valorTiradatx.setText("");
+	    	 valorMaximotx.setText("");
+			
+		}else {
+			valorTiradatx.setEditable(true);
+			valorMaximotx.setEditable(true);
+			btntirar.setDisable(false);
+			btnparar.setDisable(false);
+			btnportodo.setDisable(false);
+			valorRiesgotx.setEditable(true);
+			btnriesgo.setDisable(false);
+			
+		}
+		
+		
 		}
 		
 		
@@ -148,6 +169,7 @@ public class ControladorDado  implements Initializable{
 
     @FXML
     void tirar(ActionEvent event) {
+    	
     	Dado d=new Dado();
     	int dado=d.calcularNumero();
     	Imagenes dado1=new Imagenes();
@@ -172,7 +194,11 @@ public class ControladorDado  implements Initializable{
     }
     @FXML
     void rendirse(ActionEvent event) {
+    	this.parar(event);
     	player.iniciar();
+    	iaplayer.iniciar();
+    	valorTiradatx.setText("");
+    	 valorMaximotx.setText("");
     	txtnumJugador.setText("");
 		valorRiesgotx.setText("");
 		txtnumJugador.setText("");
@@ -181,6 +207,11 @@ public class ControladorDado  implements Initializable{
 		gananciaIAtx.setText("");
 		gananciatx.setText("");
 		txtnumIA.setText("");
+		btntirar.setDisable(true);
+		btnparar.setDisable(true);
+		valorRiesgotx.setEditable(false);
+		btnriesgo.setDisable(true);
+		
 	
 
     }

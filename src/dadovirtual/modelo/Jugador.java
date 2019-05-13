@@ -6,6 +6,7 @@ private double efectivo;
 private double valorTirada;
 private double riesgoCalculado;
 private double ganancia;
+private int numJugador;
 
  public void  iniciar() {
 	 ganancia=0;
@@ -20,6 +21,7 @@ private double ganancia;
  
  
  
+
 public double getEfectivo() {
 	return efectivo;
 }
@@ -44,7 +46,12 @@ public double getGanancia() {
 public void setGanancia(double ganancia) {
 	this.ganancia = ganancia;
 }
-
+public int getNumJugador() {
+	return numJugador;
+}
+public void setNumJugador(int numJugador) {
+	this.numJugador = numJugador;
+}
 public void prueba() {
 	
 }
