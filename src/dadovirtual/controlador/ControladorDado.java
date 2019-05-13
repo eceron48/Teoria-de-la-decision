@@ -6,8 +6,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import dadovirtual.modelo.Dado;
+import dadovirtual.modelo.GifIA;
 import dadovirtual.modelo.Imagenes;
 import dadovirtual.modelo.Jugador;
+import dadovirtual.modelo.ResultadoIA;
+import dadovirtual.modelo.ResultadoImagen;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -19,7 +22,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class ControladorDado  implements Initializable{
-	
+	Jugador player=new Jugador();
+ 	
 	@FXML
     private Label lbimg1;
     @FXML
@@ -184,7 +188,7 @@ public class ControladorDado  implements Initializable{
 
 	@FXML
     void empezar(ActionEvent event) {
-		Jugador player=new Jugador();
+		
 		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));;
 		player.setValorTirada(Double.parseDouble(valorTiradatx.getText()));
 		valorTiradatx.getText();
@@ -197,6 +201,25 @@ public class ControladorDado  implements Initializable{
 
     @FXML
     void parar(ActionEvent event) {
+    	Dado d=new Dado();
+    	int dado=d.calcularNumero();
+    	ResultadoImagen RI=new ResultadoImagen();
+     	imbimg1.setImage(RI.gifJugadorR(dado));
+    	txtnumJugador.setText(String.valueOf(dado));
+   
+    	
+    	try {
+			Thread.sleep(1000);  
+			int s=d.calcularNumero();
+			 ResultadoIA Gif=new ResultadoIA();
+			 imbimg2.setImage(Gif.gifIAR(s));
+			txtnumIA.setText(String.valueOf(s));
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
 
     }
 
@@ -215,18 +238,28 @@ public class ControladorDado  implements Initializable{
     	Dado d=new Dado();
     	int dado=d.calcularNumero();
     	Imagenes dado1=new Imagenes();
-    	
     	imbimg1.setImage(dado1.gifJugador(dado));
-    	imbimg2.setImage(dado1.gifJugador(dado));
     	
   
     	
+			 GifIA Gif=new GifIA();
+			 Dado da=new Dado();
+			 int s=da.calcularNumero();
+			imbimg2.setImage(Gif.gifIA(s));
+			
+		
+    	
+
+   
+    	
+    	// txttotalMesa.setText(String.valueOf(id));
     	
     	
 
     }
     @FXML
     void rendirse(ActionEvent event) {
+    	
 
     }
 	
