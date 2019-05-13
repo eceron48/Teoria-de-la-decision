@@ -208,17 +208,13 @@ public class ControladorDado  implements Initializable{
     	txtnumJugador.setText(String.valueOf(dado));
    
     	
-    	try {
-			Thread.sleep(1000);  
+    	
 			int s=d.calcularNumero();
 			 ResultadoIA Gif=new ResultadoIA();
 			 imbimg2.setImage(Gif.gifIAR(s));
 			txtnumIA.setText(String.valueOf(s));
 			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
     	
 
     }
