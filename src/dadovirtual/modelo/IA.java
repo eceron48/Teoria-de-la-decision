@@ -6,6 +6,9 @@ public class IA implements Jugadas {
 	public IA() {
 		
 	}
+	public void  iniciar() {
+		 tirarIA=0;
+	}
 
 	public int getTirarIA() {
 		return tirarIA;

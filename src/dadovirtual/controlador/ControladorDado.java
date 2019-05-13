@@ -5,6 +5,8 @@ package dadovirtual.controlador;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import dadovirtual.modelo.Dado;
 import dadovirtual.modelo.GifIA;
 import dadovirtual.modelo.Imagenes;
@@ -16,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -23,6 +26,7 @@ import javafx.scene.control.Label;
 
 public class ControladorDado  implements Initializable{
 	Jugador player=new Jugador();
+	
  	
 	@FXML
     private Label lbimg1;
@@ -81,6 +85,114 @@ public class ControladorDado  implements Initializable{
     @FXML
     private TextField txttotalMesa;
     
+
+
+	@FXML
+    void empezar(ActionEvent event) {
+		
+	
+		if (valorMaximotx.getText().isEmpty() ||valorTiradatx.getText().isEmpty() ) {
+			JOptionPane.showMessageDialog(null, "debe llenar los campos valor máximo de apuesta y valor tirada  ",null, 1);
+		}
+		else {
+		
+		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));;
+		player.setValorTirada(Double.parseDouble(valorTiradatx.getText()));
+		player.setValorTirada(Double.valueOf(valorTiradatx.getText()));
+		valorTiradatx.setEditable(false);
+		valorMaximotx.setEditable(false);
+		}
+		
+		
+		
+		valorRiesgotx.setText("");
+		txtnumJugador.setText("");
+		txtnumIA.setText("");
+		txttotalMesa.setText("");
+		gananciaIAtx.setText("");
+		gananciatx.setText("");
+	
+	
+
+    }
+
+    @FXML
+    void parar(ActionEvent event) {
+    	Dado d=new Dado();
+    	int dado=d.calcularNumero();
+    	ResultadoImagen RI=new ResultadoImagen();
+     	imbimg1.setImage(RI.gifJugadorR(dado));
+    	txtnumJugador.setText(String.valueOf(dado));
+   
+    	
+    	
+			int s=d.calcularNumero();
+			 ResultadoIA Gif=new ResultadoIA();
+			 imbimg2.setImage(Gif.gifIAR(s));
+			txtnumIA.setText(String.valueOf(s));
+			
+		
+    	
+
+    }
+
+    @FXML
+    void portodo(ActionEvent event) {
+
+    }
+
+    @FXML
+    void riesgo(ActionEvent event) {
+
+    }
+
+    @FXML
+    void tirar(ActionEvent event) {
+    	Dado d=new Dado();
+    	int dado=d.calcularNumero();
+    	Imagenes dado1=new Imagenes();
+    	imbimg1.setImage(dado1.gifJugador(dado));
+    	
+  
+    	
+			 GifIA Gif=new GifIA();
+			 Dado da=new Dado();
+			 int s=da.calcularNumero();
+			imbimg2.setImage(Gif.gifIA(s));
+			
+		
+    	
+
+   
+    	
+    	// txttotalMesa.setText(String.valueOf(id));
+    	
+    	
+
+    }
+    @FXML
+    void rendirse(ActionEvent event) {
+    	player.iniciar();
+    	txtnumJugador.setText("");
+		valorRiesgotx.setText("");
+		txtnumJugador.setText("");
+		txtnumIA.setText("");
+		txttotalMesa.setText("");
+		gananciaIAtx.setText("");
+		gananciatx.setText("");
+		txtnumIA.setText("");
+	
+
+    }
+	
+	
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
     public Button getBtnriesgo() {
 		return btnriesgo;
@@ -186,85 +298,21 @@ public class ControladorDado  implements Initializable{
 		this.panel2fx = panel2fx;
 	}
 
+
 	@FXML
-    void empezar(ActionEvent event) {
-		
-		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));;
-		player.setValorTirada(Double.parseDouble(valorTiradatx.getText()));
-		valorTiradatx.getText();
-		valorTiradatx.setEditable(false);
-		valorMaximotx.setEditable(false);
-		
-	
-
+    void soloNumerosMaximo(KeyEvent event) {
+	 	char c=event.getCharacter().charAt(0);
+	 	if( Character.isLetter(c)) {
+	 		event.consume();
+	 	}
     }
 
     @FXML
-    void parar(ActionEvent event) {
-    	Dado d=new Dado();
-    	int dado=d.calcularNumero();
-    	ResultadoImagen RI=new ResultadoImagen();
-     	imbimg1.setImage(RI.gifJugadorR(dado));
-    	txtnumJugador.setText(String.valueOf(dado));
-   
-    	
-    	
-			int s=d.calcularNumero();
-			 ResultadoIA Gif=new ResultadoIA();
-			 imbimg2.setImage(Gif.gifIAR(s));
-			txtnumIA.setText(String.valueOf(s));
-			
-		
-    	
-
+    void soloNumerosTirar(KeyEvent event) {
+    	char c=event.getCharacter().charAt(0);
+	 	if( Character.isLetter(c)) {
+	 		event.consume();
+	 	}
     }
-
-    @FXML
-    void portodo(ActionEvent event) {
-
-    }
-
-    @FXML
-    void riesgo(ActionEvent event) {
-
-    }
-
-    @FXML
-    void tirar(ActionEvent event) {
-    	Dado d=new Dado();
-    	int dado=d.calcularNumero();
-    	Imagenes dado1=new Imagenes();
-    	imbimg1.setImage(dado1.gifJugador(dado));
-    	
-  
-    	
-			 GifIA Gif=new GifIA();
-			 Dado da=new Dado();
-			 int s=da.calcularNumero();
-			imbimg2.setImage(Gif.gifIA(s));
-			
-		
-    	
-
-   
-    	
-    	// txttotalMesa.setText(String.valueOf(id));
-    	
-    	
-
-    }
-    @FXML
-    void rendirse(ActionEvent event) {
-    	
-
-    }
-	
-	
-	
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
-	}
-
+    
 }

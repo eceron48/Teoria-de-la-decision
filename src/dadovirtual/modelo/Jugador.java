@@ -10,6 +10,8 @@ private double ganancia;
  public void  iniciar() {
 	 ganancia=0;
 	 riesgoCalculado=0;
+	 efectivo=0;
+	 valorTirada=0;
 	 
  }
  public Jugador() {
