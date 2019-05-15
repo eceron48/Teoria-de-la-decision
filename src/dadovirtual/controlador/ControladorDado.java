@@ -12,6 +12,7 @@ import dadovirtual.modelo.GifIA;
 import dadovirtual.modelo.IA;
 import dadovirtual.modelo.Imagenes;
 import dadovirtual.modelo.Jugador;
+import dadovirtual.modelo.Mesa;
 import dadovirtual.modelo.ResultadoIA;
 import dadovirtual.modelo.ResultadoImagen;
 import javafx.fxml.FXML;
@@ -28,8 +29,18 @@ import javafx.scene.control.Label;
 public class ControladorDado  implements Initializable{
 	Jugador player=new Jugador();
 	IA iaplayer=new IA();
+	Mesa mesa =new Mesa();
+	boolean portodo=false;
 	
  	
+	public boolean isPortodo() {
+		return portodo;
+	}
+
+	public void setPortodo(boolean portodo) {
+		this.portodo = portodo;
+	}
+
 	@FXML
     private Label lbimg1;
     @FXML
@@ -84,8 +95,12 @@ public class ControladorDado  implements Initializable{
     
     @FXML
     private Button btnrendirse;
+    
+    
+    
+    
     @FXML
-    private TextField txttotalMesa;
+    private TextField txtmesa;
     
    
 	@FXML
@@ -99,7 +114,7 @@ public class ControladorDado  implements Initializable{
 		else {
 			
 		
-		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));;
+		player.setEfectivo(Double.parseDouble(valorMaximotx.getText()));
 		player.setValorTirada(Double.parseDouble(valorTiradatx.getText()));	
 		iaplayer.setTirarIA(Double.parseDouble(valorTiradatx.getText()));
 		
@@ -118,6 +133,18 @@ public class ControladorDado  implements Initializable{
 			btnportodo.setDisable(false);
 			valorRiesgotx.setEditable(true);
 			btnriesgo.setDisable(false);
+			btnportodo.setDisable(false);
+			player.ganancia();
+			
+			player.estadoDeGanancia();
+			
+			iaplayer.estadoDeGanancia();
+			
+			mesa.apuestaSobreLaMesa(player.getValorTirada(), iaplayer.getTirarIA());
+			txtmesa.setText(String.valueOf(mesa.getApuesta()) );
+			gananciaIAtx.setText(String.valueOf(iaplayer.getGanancia()) );
+			gananciatx.setText(String.valueOf(player.getGanancia()) );
+			
 			
 		}
 		
@@ -126,12 +153,7 @@ public class ControladorDado  implements Initializable{
 		
 		
 		
-		valorRiesgotx.setText("");
-		txtnumJugador.setText("");
-		txtnumIA.setText("");
-		txttotalMesa.setText("");
-		gananciaIAtx.setText("");
-		gananciatx.setText("");
+		
 	
 	
 
@@ -139,6 +161,8 @@ public class ControladorDado  implements Initializable{
 
     @FXML
     void parar(ActionEvent event) {
+    	
+    	if(mesa.getApuesta()>0 && player.getGanancia()>player.getValorTirada()) {
     	Dado d=new Dado();
     	int dado=d.calcularNumero();
     	ResultadoImagen RI=new ResultadoImagen();
@@ -152,19 +176,123 @@ public class ControladorDado  implements Initializable{
 			 imbimg2.setImage(Gif.gifIAR(s));
 			txtnumIA.setText(String.valueOf(s));
 			
+		mesa.evaluarTurnos(dado, s, player.getValorTirada());	
 		
+		player.evaluarJugadas(dado, player.getValorTirada());
+		
+		iaplayer.evaluarJugadas(s, player.getValorTirada());
+		
+		txtmesa.setText(String.valueOf(mesa.getApuesta()) );
+		gananciatx.setText(String.valueOf(player.getGanancia()));
+		gananciaIAtx.setText(String.valueOf(iaplayer.getGanancia()));
+    	}
+    	else {
+    		if(player.getGanancia()>player.getEfectivo()) {
+    			double ganador=player.getGanancia()-player.getEfectivo();
+    			JOptionPane.showMessageDialog(null, " el juego ha terminado juego terminado usted gano ="+ganador,null, 1);
+    			this.rendirse(event);
+    			
+    		}else {
+    			double perdedor=player.getEfectivo()-player.getGanancia();
+    			JOptionPane.showMessageDialog(null, " el juego ha terminado lamentablemente has perdido  ="+perdedor,null, 2);	
+    			this.rendirse(event);
+    		}
     	
+    	
+    		
+    	}
 
     }
 
     @FXML
     void portodo(ActionEvent event) {
+    	
+ 
+    	if( mesa.getApuesta()<=player.getGanancia()) {
+        	Dado d=new Dado();
+        	int dado=d.calcularNumero();
+        	ResultadoImagen RI=new ResultadoImagen();
+         	imbimg1.setImage(RI.gifJugadorR(dado));
+        	txtnumJugador.setText(String.valueOf(dado));
+        	player.setNumJugador(Integer.parseInt(txtnumJugador.getText()));
+       
+        
+        	
+    			int s=d.calcularNumero();
+    			 ResultadoIA Gif=new ResultadoIA();
+    			 imbimg2.setImage(Gif.gifIAR(s));
+    			txtnumIA.setText(String.valueOf(s));
+    			iaplayer.setNumIA(Integer.parseInt(txtnumIA.getText()));
+    			this.portodo=true;
+    			
+    			this.validarResultadoTodo(portodo, event);
+    	
+    	} else {
+        	 JOptionPane.showMessageDialog(null, "eres pobre no puedes apostar todo",null,1);	
+        	}
 
     }
 
+    
+    public void validarResultadoTodo(boolean rest, ActionEvent event) {
+		
+ 	   if( (player.irPorTodo(mesa.getApuesta(), player.getGanancia(), player.getNumJugador(), iaplayer.getNumIA()))==false) {
+ 		   
+ 		   JOptionPane.showMessageDialog(null, "Gana la casa !!!! ="+mesa.getApuesta()+"$  jugada IA= "+iaplayer.getNumIA()+" vs jugador = "+player.getNumJugador(),null,1);   
+ 		  this.rendirse(event);
+ 		   
+ 	   }else {
+ 		double  ganar= (player.getGanancia()+ mesa.getApuesta()) -player.getEfectivo();
+ 		
+ 			JOptionPane.showMessageDialog(null, "Ganaste !!!! un total de = "+ganar,null,1);
+ 			this.rendirse(event);
+ 	   }
+ 	    
+   
+ 	
+    	
+    }
     @FXML
     void riesgo(ActionEvent event) {
-
+    	
+    	player.setRiesgoCalculado(Double.valueOf(valorRiesgotx.getText()));
+    	
+    	if( (mesa.getApuesta()>player.getRiesgoCalculado()) && ( player.getGanancia()>player.getRiesgoCalculado())) {
+        	Dado d=new Dado();
+        	int dado=d.calcularNumero();
+        	ResultadoImagen RI=new ResultadoImagen();
+         	imbimg1.setImage(RI.gifJugadorR(dado));
+        	txtnumJugador.setText(String.valueOf(dado));
+        	player.setNumJugador(Integer.parseInt(txtnumJugador.getText()));
+       
+        	
+        	
+    			int s=d.calcularNumero();
+    			 ResultadoIA Gif=new ResultadoIA();
+    			 imbimg2.setImage(Gif.gifIAR(s));
+    			txtnumIA.setText(String.valueOf(s));
+    			iaplayer.setNumIA(Integer.parseInt(txtnumIA.getText()));
+    			
+    			if(player.RiesgoCalculado(s, dado)) {
+    				player.sumarJugada(player.getRiesgoCalculado());
+    				mesa.quitarTirada(player.getRiesgoCalculado());
+    			}else{
+    				player.quitarJugada(player.getRiesgoCalculado());
+    				mesa.sumarTirada(player.getRiesgoCalculado());
+    			}
+    			
+    			
+   
+    }else {
+    	JOptionPane.showMessageDialog(null, "no se puede permitir esa apuesta es muy alta ",null,1);
+    	valorRiesgotx.setText("");
+    	
+    }
+    	
+    	txtmesa.setText(String.valueOf(mesa.getApuesta()) );
+		gananciatx.setText(String.valueOf(player.getGanancia()));
+		gananciaIAtx.setText(String.valueOf(iaplayer.getGanancia()));
+		
     }
 
     @FXML
@@ -187,14 +315,16 @@ public class ControladorDado  implements Initializable{
 
    
     	
-    	// txttotalMesa.setText(String.valueOf(id));
+    
     	
     	
 
     }
     @FXML
     void rendirse(ActionEvent event) {
-    	this.parar(event);
+    	imbimg1.setImage(null);
+    	imbimg2.setImage(null);
+    	mesa.iniciar();
     	player.iniciar();
     	iaplayer.iniciar();
     	valorTiradatx.setText("");
@@ -203,11 +333,12 @@ public class ControladorDado  implements Initializable{
 		valorRiesgotx.setText("");
 		txtnumJugador.setText("");
 		txtnumIA.setText("");
-		txttotalMesa.setText("");
+		txtmesa.setText("");
 		gananciaIAtx.setText("");
 		gananciatx.setText("");
 		txtnumIA.setText("");
 		btntirar.setDisable(true);
+		btnportodo.setDisable(true);
 		btnparar.setDisable(true);
 		valorRiesgotx.setEditable(false);
 		btnriesgo.setDisable(true);
@@ -271,6 +402,14 @@ public class ControladorDado  implements Initializable{
 
 	public void setValorTiradatx(TextField valorTiradatx) {
 		this.valorTiradatx = valorTiradatx;
+	}
+
+	public Button getBtnrendirse() {
+		return btnrendirse;
+	}
+
+	public void setBtnrendirse(Button btnrendirse) {
+		this.btnrendirse = btnrendirse;
 	}
 
 	public Button getBtninicio() {
